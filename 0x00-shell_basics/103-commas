@@ -1,0 +1,2 @@
+#!/bin/bash
+ls --group-directories-first -pavm 
