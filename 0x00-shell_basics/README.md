@@ -9,3 +9,4 @@
 8-Delete the file betty
 9-Delete the directory myfirstdirectory that is in the /tmp directory.
 10-Write a script that changes the working directory to the previous one.
+11-Write a script that lists all files (even ones with names beginning with a period character
