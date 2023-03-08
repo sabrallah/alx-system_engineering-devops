@@ -10,4 +10,5 @@
 9-Delete the directory myfirstdirectory that is in the /tmp directory.
 10-Write a script that changes the working directory to the previous one.
 11-Write a script that lists all files (even ones with names beginning with a period character
-12-Write a script that prints the type of the file named iamafile
+12-Write a script that prints the type of the file named iamafile.
+13-Create a symbolic link to /bin/ls, named __ls__
