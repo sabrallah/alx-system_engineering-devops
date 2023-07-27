@@ -2,12 +2,22 @@
 # This script displays the time for 12 hours and 59 minutes.
 
 hour=0
-while [ $hour -lt 12 ]
+lines_printed=0
+
+while [ $hour -lt 12 ] && [ $lines_printed -lt 70 ]
 do
     echo "Hour: $hour"
+    ((lines_printed++))
+
     for minute in {1..59}
     do
-        echo $minute
+        if [ $lines_printed -lt 70 ]; then
+            echo $minute
+            ((lines_printed++))
+        else
+            break
+        fi
     done
+
     ((hour++))
 done
