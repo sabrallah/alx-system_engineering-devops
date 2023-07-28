@@ -1,2 +1,11 @@
 #!/usr/bin/env bash
+# This is a Bash script that terminates the process "7-highlander".
+
+# Option 1: Use pgrep and xargs to kill the process using SIGKILL.
+# pgrep -f 7-highlander | xargs kill -SIGKILL
+
+# Option 2: Use pkill to directly kill the process using SIGKILL.
 pkill -f -SIGKILL 7-highlander
+
+# Option 3: Another way to use pkill with the -9 option to send SIGKILL.
+# pkill -9 "bash ./7-highlander" -f
