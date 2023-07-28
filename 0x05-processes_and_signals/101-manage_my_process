@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
-# Manages the program called manage_my_process
+# program managed calle manage_my_process
 
-FILE="/var/run/my_process.pid"
+FICHIER="/var/run/my_process.pid"
 
-create()
+cree()
 {
-    sudo touch $FILE
-    sudo bash -c "echo $$ > $FILE"
+    sudo touch $FICHIER
+    sudo bash -c "echo $$ > $FICHIER"
 }
 
 if [ "$1" == "start" ]; then
-    create
+    cree
     ./manage_my_process &
     echo "manage_my_process started"
 

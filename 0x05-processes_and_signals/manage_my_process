@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Indefinitely writes "I am alive!" to a file
+# writes "I am alive!" into file
 
-NAME=/tmp/my_process
-sudo touch $NAME
+NOM=/tmp/my_process
+sudo touch $NOM
 
 while true; do
-    sudo bash -c "echo \"I am alive!\" >> $NAME"
+    sudo bash -c "echo \"I am alive!\" >> $NOM"
     sleep 2
 done
