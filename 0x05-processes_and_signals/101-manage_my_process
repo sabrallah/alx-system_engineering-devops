@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Manages the program called manage_my_process
+
+PID_FILE="/var/run/my_process.pid"
+
+create_pid_file()
+{
+    sudo touch $PID_FILE
+    sudo bash -c "echo $$ > $PID_FILE"
+}
+
+start()
+{
+    create_pid_file
+    ./manage_my_process &
+    echo "manage_my_process started"
+}
+
+stop()
+{
+    if [ -e $PID_FILE ]; then
+        sudo pkill -F $PID_FILE
+        sudo rm $PID_FILE
+        echo "manage_my_process stopped"
+    fi
+}
+
+restart()
+{
+    stop
+    start
+    echo "manage_my_process restarted"
+}
+
+case "$1" in
+    start) start ;;
+    stop) stop ;;
+    restart) restart ;;
+    *) echo "Usage: manage_my_process {start|stop|restart}" ;;
+esac
