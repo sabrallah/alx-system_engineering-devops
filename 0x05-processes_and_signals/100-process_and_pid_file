@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # This script creates a file containing its PID at /var/run/myscript.pid
-# It displays "To the moon and back" indefinitely
+# It displays "To infinity and beyond" indefinitely
 # It displays "I dislike the kill command" when receiving a SIGTERM signal
 # It displays "Why don't you love me?" when receiving a SIGINT signal
 # It deletes the file /var/run/myscript.pid and terminates itself when receiving a SIGQUIT or SIGTERM signal
