@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# the program managed  call manage_my_process
+# the program calle manage_my_process
 
-FILE="/var/run/my_process.pid"
+FICHIER="/var/run/my_process.pid"
 
 cree()
 {
-    sudo touch $FILE
-    sudo bash -c "echo $$ > $FILE"
+    sudo touch $FICHIER
+    sudo bash -c "echo $$ > $FICHIER"
 }
 
 if [ "$1" == "start" ]; then

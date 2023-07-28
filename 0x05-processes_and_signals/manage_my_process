@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Indefinitely writes "I am alive!" to a file
+# writes "I am alive!" to file
 
 NOM=/tmp/my_process
 sudo touch $NOM
