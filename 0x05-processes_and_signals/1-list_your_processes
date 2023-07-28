@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Using ps command with options to list all processes and display in a tree-like format
+ps axjf
