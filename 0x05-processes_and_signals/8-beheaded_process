@@ -1,8 +1,2 @@
 #!/usr/bin/env bash
-# This script kills process 7-highlander
-
-# Find process ID of 7-highlander
-pid=$(pgrep -f "7-highlander")
-
-# Send SIGTERM signal to the process
-kill -s SIGTERM "$pid"
+pkill -f -SIGKILL 7-highlander
