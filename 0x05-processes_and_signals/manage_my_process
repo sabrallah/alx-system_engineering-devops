@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# SHOULD writes "I am alive!" into file
+# Indefinitely writes "I am alive!" to a file
 
-NAME=/tmp/my_process
+NOM=/tmp/my_process
+sudo touch $NOM
 
 while true; do
-    echo "I am alive!" | sudo tee -a $NAME >/dev/null
+    sudo bash -c "echo \"I am alive!\" >> $NOM"
     sleep 2
 done
