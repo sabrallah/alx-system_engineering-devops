@@ -1,11 +1,25 @@
 #!/usr/bin/env bash
-# This is a Bash script that terminates the process "7-highlander".
 
-# Option 1: Use pgrep and xargs to kill the process using SIGKILL.
-# pgrep -f 7-highlander | xargs kill -SIGKILL
 
-# Option 2: Use pkill to directly kill the process using SIGKILL.
-pkill -f -SIGKILL 7-highlander
 
-# Option 3: Another way to use pkill with the -9 option to send SIGKILL.
-# pkill -9 "bash ./7-highlander" -f
+# script creates the file /var/run/myscript.pid containing its PID
+# Displays "To infinity and beyond" indefini
+# Displays "I hate the kill command" when receiving SIGTERM signal
+# Displays "Y U no love me?!" when receiving a SIGINT signal
+# Deletes the file /var/run/myscript.pid and terminates itself when receiving a SIGQUIT or SIGTERM signal
+
+echo "$$" > /var/run/myscript.pid
+
+delete_func() {
+    rm /var/run/myscript.pid
+    exit
+}
+
+trap 'echo "Y U no love me?!"' SIGINT
+trap 'echo "I hate the kill command"; delete_func' SIGTERM
+trap 'delete_func' SIGQUIT
+
+while true; do
+    echo "To infinity and beyond"
+    sleep 2
+done
