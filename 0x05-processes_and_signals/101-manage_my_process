@@ -1,29 +1,30 @@
 #!/usr/bin/env bash
-# Manages the program called manage_my_process
+# the program managed  call manage_my_process
 
 FILE="/var/run/my_process.pid"
 
-create() {
-    echo $$ | sudo tee $FILE >/dev/null
+cree()
+{
+    sudo touch $FILE
+    sudo bash -c "echo $$ > $FILE"
 }
 
 if [ "$1" == "start" ]; then
-    create
+    cree
     ./manage_my_process &
     echo "manage_my_process started"
 
-elif [ "$1" == "stop" ]; then
-    if [ -e "$FILE" ]; then
-        sudo pkill -f "./manage_my_process"
-        sudo rm $FILE
-    fi
+elif [ "$1" == "stop" ]
+then
+    [ -e "/var/run/my_process.pid" ] && sudo pkill -f "./manage_my_process" && rm /var/run/my_process.pid
     echo "manage_my_process stopped"
 
-elif [ "$1" == "restart" ]; then
-    $0 stop >/dev/null 2>&1
-    $0 start >/dev/null 2>&1
+elif [ "$1" == "restart" ]
+then
+    $0 stop >& /dev/null
+    $0 start >& /dev/null
     echo "manage_my_process restarted"
 
 else
-    echo "Usage: $0 {start|stop|restart}"
+    echo "Usage: manage_my_process {start|stop|restart}"
 fi

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Indefinitely writes "I am alive!" to a file
+# SHOULD writes "I am alive!" into file
 
-NAME=/tmp/my_process
+NOM=/tmp/my_process
 
 while true; do
-    echo "I am alive!" | sudo tee -a $NAME >/dev/null
+    echo "I am alive!" | sudo tee -a $NOM >/dev/null
     sleep 2
 done
