@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
-# writes "I am alive!" into file
-
-NOM=/tmp/my_process
-sudo touch $NOM
+# This script writes "I am alive!" to /tmp/my_process indefinitely with a 2-second pause between each message
 
 while true; do
-    sudo bash -c "echo \"I am alive!\" >> $NOM"
+    echo "I am alive!" >> /tmp/my_process
     sleep 2
 done
