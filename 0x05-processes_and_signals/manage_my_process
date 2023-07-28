@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
-# This script indefinitely writes "I am alive!" to /tmp/my_process
+# Indefinitely writes "I am alive!" to a file
+
+NAME=/tmp/my_process
 
 while true; do
-    echo "I am alive!" >> /tmp/my_process
+    echo "I am alive!" | sudo tee -a $NAME >/dev/null
     sleep 2
 done
