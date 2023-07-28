@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# This script stops 4-to_infinity_and_beyond process
+# This script stops the 4-to_infinity_and_beyond process
 
-# Get process ID of the 4-to_infinity_and_beyond process
-pid=$(pgrep 4-to_infinity_and_beyond)
+# Get the process ID of the 4-to_infinity_and_beyond process
+pid=$(pgrep -f "4-to_infinity_and_beyond")
 
-# Use kill command to stop process
-kill "$pid"
+# Use kill to stop the process
+kill $pid
