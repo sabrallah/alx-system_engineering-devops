@@ -5,4 +5,4 @@
 pid=$(pgrep 4-to_infinity_and_beyond)
 
 # Use kill command to stop process
-kill $pid
+kill "$pid"
