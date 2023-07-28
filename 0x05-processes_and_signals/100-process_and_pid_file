@@ -15,7 +15,7 @@ delete_file()
 
 while true
 do
-  echo "To the moon and back"
+  echo "To infinity and beyond"
   sleep 2
   trap 'echo "Why dont you love me?"' SIGINT
   trap 'echo "I dislike the kill command" && delete_file' SIGTERM
