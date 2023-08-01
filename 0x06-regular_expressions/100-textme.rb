@@ -1,16 +1,11 @@
 #!/usr/bin/env ruby
 
-input_string = ARGV[0]
+input = ARGV[0]
 
-if input_string.nil?
-  puts "Please provide the input string as a command-line argument."
-  exit
-end
+sender = input.scan(/(?<=from:)(\+?\w+)/).join
+receiver = input.scan(/(?<=to:)(\+?\w+)/).join
+flags = input.scan(/(?<=flags:)(\w+)/).join
 
-matches = input_string.scan(/(?<=from:|to:|flags:)(\+?\w+)/)
-
-if matches.empty?
-  puts "No matches found."
-else
-  puts matches.join(",")
-end
+puts "Sender: #{sender}"
+puts "Receiver: #{receiver}"
+puts "Flags: #{flags}"
