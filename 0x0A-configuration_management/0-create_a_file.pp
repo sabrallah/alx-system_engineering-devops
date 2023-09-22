@@ -5,6 +5,7 @@
 # * File group is www-data
 # * File contains "I love Puppet"
 
+
 file { '/tmp/school':
   ensure => present,
   owner  => 'www-data',
