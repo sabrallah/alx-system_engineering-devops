@@ -1,6 +1,5 @@
-# Install Flask 2.1.0
-
+# Installs puppet-lints
 package { 'puppet-lint':
-   ensure   => '2.1.0',
-   provider => gem,
+  ensure   => '2.5.0',
+  provider => gem,
 }
