@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# This script installs and configures Nginx on an Ubuntu machine to meet the specified requirements.
+
+# Update the package list
+apt-get update -y
+
+# Install Nginx with the '-y' flag for automatic yes to prompts
+apt-get install nginx -y
+
+# Ensure Nginx is listening on port 80
+sed -i 's/80 default_server/80 default_server;/g' /etc/nginx/sites-available/default
+
+# Create a custom HTML page with "Hello World!"
+echo "<html><head><title>Hello World!</title></head><body>Hello World!</body></html>" > /var/www/html/index.html
+
+# Restart Nginx without using systemctl
+service nginx restart
