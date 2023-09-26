@@ -1,30 +1,9 @@
 #!/usr/bin/env bash
-# Configure Nginx redirection
+# configures an Nginx server so that /redirect_me is redirecting to another page
 
-# Install Nginx if not already installed
-if ! dpkg -l | grep -q "nginx"; then
-  apt-get update
-  apt-get -y install nginx
-fi
-
-# Create a custom Nginx configuration file for the redirection
-cat <<EOL > /etc/nginx/sites-available/redirect_me
-server {
-    listen 80;
-    server_name _;
-
-    location /redirect_me {
-        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-    }
-
-    # Additional server configuration goes here
-}
-EOL
-
-# Create a symbolic link to enable the site
-ln -s /etc/nginx/sites-available/redirect_me /etc/nginx/sites-enabled/
-
-# Test Nginx configuration and reload if successful
-if nginx -t; then
-    systemctl reload nginx
-fi
+apt-get -y update
+apt-get -y install nginx
+ufw allow 'Nginx HTTP'
+echo 'Holberton School' > /var/www/html/index.nginx-debian.html
+sed -i '/listen 80 default_server;/a rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
+service nginx start
