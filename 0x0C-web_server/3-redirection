@@ -1,34 +1,7 @@
 #!/usr/bin/env bash
-# Configures an Nginx server to redirect /redirect_me to a YouTube video
 
-# Update the package manager
-apt-get -y update
+# Redirect /redirect_me to https://www.youtube.com/watch?v=QH2-TGUlwu4
 
-# Install Nginx
-apt-get -y install nginx
+sed -i '57irewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
 
-# Allow HTTP traffic through the firewall
-ufw allow 'Nginx HTTP'
-
-# Create a simple HTML file for the default server
-echo 'Hello World!' > /var/www/html/index.nginx-debian.html
-
-# Create a configuration file to handle the redirection
-echo 'server {
-    listen 80 default_server;
-    location /redirect_me {
-        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-    }
-}' > /etc/nginx/sites-available/redirect_me
-
-# Enable the new site configuration
-ln -s /etc/nginx/sites-available/redirect_me /etc/nginx/sites-enabled/
-
-# Remove the default server block (if you don't need it)
-rm /etc/nginx/sites-enabled/default
-
-# Test the Nginx configuration
-nginx -t
-
-# Reload Nginx to apply changes
-service nginx reload
+systemctl restart nginx
