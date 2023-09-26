@@ -1,25 +1,30 @@
 #!/usr/bin/env bash
-# Script that installs Nginx server and redirects /redirect_me
+# This script configures Nginx to perform a 301 Moved Permanently redirection
+# from /redirect_me to the specified destination.
 
-sudo apt update
-sudo apt install -y nginx
-sudo ufw allow 'Nginx HTTP'
-echo "Hello World!" | sudo tee /var/www/html/index.html
-# OR
-# echo "Hello World!" > index.html
-# sudo mv index.html /var/www/html
+# Install Nginx if not already installed
+if ! dpkg -l | grep -q nginx; then
+    sudo apt-get update
+    sudo apt-get install -y nginx
+fi
 
+# Create an Nginx configuration file for the redirection
 echo "server {
-	listen 80 default_server;
-        listen [::]:80 default_server;
+    listen 80;
+    server_name _;
 
-        root /var/www/html;
-        index index.html;
+    location /redirect_me {
+        return 301 https://www.example.com/new-page;
+    }
 
-        location /redirect_me {
-                return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-        }
-}" > default
+    # Additional server blocks and configurations can be added here if needed.
+}" | sudo tee /etc/nginx/sites-available/redirect_me > /dev/null
 
-sudo mv -f default /etc/nginx/sites-available/default
-sudo service nginx restart
+# Create a symbolic link to enable the configuration
+sudo ln -s /etc/nginx/sites-available/redirect_me /etc/nginx/sites-enabled/
+
+# Test the Nginx configuration
+sudo nginx -t
+
+# Reload Nginx to apply changes
+sudo systemctl reload nginx
