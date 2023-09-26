@@ -1,4 +1,4 @@
-# Puppet manifest to install nginx
+# manifest to install engine x
 package { 'nginx':
   ensure => installed,
 }
