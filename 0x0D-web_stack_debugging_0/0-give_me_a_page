@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
-# fixing apach servers in to container
-service apache2 start
+# debug apach web servers
+
+echo "ServerName localhost" >> /etc/apache2.conf
+sudo service apache2 start
