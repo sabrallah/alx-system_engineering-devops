@@ -1,1 +1,1 @@
-1-install_load_balancer
+1-install_loadbalancer
