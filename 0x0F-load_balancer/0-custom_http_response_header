@@ -1,26 +1,31 @@
 #!/usr/bin/env bash
-# This script configures Nginx to add a custom HTTP response header X-Served-By
-# with the value being the hostname of the server.
+# install nginx server and configure it to port 80, set the redirect_me page, 404 not found page and the X-served-By header
 
-# Install Nginx if it is not already installed
-if ! dpkg -l | grep -q nginx; then
-    sudo apt-get update
-    sudo apt-get install -y nginx
-fi
+sudo apt update
+sudo apt install -y nginx
+sudo ufw allow 'Nginx HTTP'
+echo "Hello World!" | sudo tee /var/www/html/index.html
+# OR
+# echo "Hello World!" > index.html
+# sudo mv index.html /var/www/html
 
-# Create a custom Nginx configuration file to add the header
-echo 'server {
-    listen 80 default_server;
-    server_name _;
-
-    location / {
+echo "Ceci n'est pas une page" > 404.html
+sudo mv 404.html /var/www/html
+echo "server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
         add_header X-Served-By $HOSTNAME;
-        # Your other Nginx configuration directives here
-    }
-}' | sudo tee /etc/nginx/sites-available/custom-header
+        root /var/www/html;
+        index index.html;
+        location /redirect_me {
+                return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+        }
 
-# Create a symbolic link to enable the custom configuration
-sudo ln -s /etc/nginx/sites-available/custom-header /etc/nginx/sites-enabled/
+        error_page 404 /404.html;
+        location = /404.html{
+        internal;
+        }
+}" > default
 
-# Test Nginx configuration and reload
-sudo nginx -t && sudo service nginx reload
+sudo mv -f default /etc/nginx/sites-available/default
+sudo service nginx restart
