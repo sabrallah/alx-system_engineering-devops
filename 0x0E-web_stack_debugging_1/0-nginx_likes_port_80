@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
-# Check if Nginx is running
-if ! pgrep nginx; then  
-  service nginx start
-fi
-# Check if port 80 is exposed
-if ! netstat -anp | grep nginx | grep 80; then
-  service nginx restart --publish 80:80
-fi
+# fix nginx configuration and start on port 80
+sudo sed -i "s/ipv6only=on//" /etc/nginx/sites-available/default
+sudo rm -f /etc/nginx/sites-enabled/default
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo service nginx restart
