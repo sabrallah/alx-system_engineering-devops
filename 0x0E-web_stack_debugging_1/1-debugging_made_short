@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
-# Fix nginx config
-sed -i "s/ipv6only=on//" /etc/nginx/sites-available/default; ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default; service nginx restart
+# command that making engine X listen to port 80
+sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
+pkill -1 nginx
