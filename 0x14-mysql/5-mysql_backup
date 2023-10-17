@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# backs up all sql databases in a dump and packages them in an archive
+
+# backups SQL databases in a dump
+mysqldump -uroot -p'$1' --all-databases > backup.sql
+
+# backages the backup dump into a .tar.gz
+sudo tar -cvzf $(date +"%d-%m-%y").tar.gz backup.sql
