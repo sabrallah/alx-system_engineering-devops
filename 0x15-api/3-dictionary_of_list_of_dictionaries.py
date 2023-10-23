@@ -12,8 +12,10 @@ def main():
     Main function to run the script
     """
     with requests.Session() as session:
-        users = session.get("https://jsonplaceholder.typicode.com/users").json()
-        todos = session.get('https://jsonplaceholder.typicode.com/todos').json()
+        users = session.get(
+            "https://jsonplaceholder.typicode.com/users").json()
+        todos = session.get(
+            'https://jsonplaceholder.typicode.com/todos').json()
 
     todo_all = {}
     for user in users:
