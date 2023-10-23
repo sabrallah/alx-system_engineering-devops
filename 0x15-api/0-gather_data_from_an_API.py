@@ -1,18 +1,26 @@
 #!/usr/bin/python3
+
+"""Script that uses JSONPlaceholder API to get information about employee"""
+
 import requests
 import sys
 
 if __name__ == "__main__":
-    employee_id = sys.argv[1]
-    url = "https://jsonplaceholder.typicode.com/todos?userId={}".format(employee_id)
-    response = requests.get(url)
-    employee_name = requests.get("https://jsonplaceholder.typicode.com/users/{}".format(employee_id)).json().get("name")
 
-    tasks = response.json()
-    total_tasks = len(tasks)
-    completed_tasks = len([task for task in tasks if task.get('completed')])
+    url = 'https://jsonplaceholder.typicode.com/'
+    user = '{}users/{}'.format(url, sys.argv[1])
+    res = requests.get(user)
+    json_o = res.json()
 
-    print("Employee {} is done with tasks({}/{}):".format(employee_name, completed_tasks, total_tasks))
-    for task in tasks:
-        if task.get('completed'):
-            print("\t {}".format(task.get('title')))
+    print(f"Employee {json_o['name']} is done with tasks", end="")
+
+    todos = '{}todos?userId={}'.format(url, sys.argv[1])
+    res = requests.get(todos)
+    tasks = res.json()
+
+    completed_tasks = [task for task in tasks if task['completed']]
+
+    print("({}/{}):".format(len(completed_tasks), len(tasks)))
+
+    for task in completed_tasks:
+        print("\t{}".format(task['title']))
