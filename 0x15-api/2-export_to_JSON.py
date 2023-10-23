@@ -1,32 +1,34 @@
 #!/usr/bin/python3
-""" a script that converts data to json """
+""" script converts data to a json """
+
 
 import json
 import requests
 import sys
 
+
 if __name__ == "__main__":
     userId = sys.argv[1]
-    # Divisez la ligne longue en plusieurs lignes
-    todos_url = (
-        'https://jsonplaceholder.typicode.com'
-        '/users/{}/todos'.format(userId)
-    )
-    todos = requests.get(todos_url)
+    user = requests.get(
+            'https://jsonplaceholder.typicode.com/users/{}'
+            .format(userId)
+            )
 
-    name = todos.json()[0].get('username')
+    name = user.json().get('username')
+    todos = requests.get('https://jsonplaceholder.typicode.com/todos')
 
+    todoUser = {}
     taskList = []
 
     for task in todos.json():
-        taskDict = {
-            "task": task.get('title'),
-            "completed": task.get('completed'),
-            "username": name
-        }
-        taskList.append(taskDict)
-
-    todoUser = {userId: taskList}
+        if task.get('userId') == int(userId):
+            taskDict = {
+                    "task": task.get('title'),
+                    "completed": task.get('completed'),
+                    "username": user.json().get('username')
+                    }
+            taskList.append(taskDict)
+        todoUser[userId] = taskList
 
     filename = userId + '.json'
 
