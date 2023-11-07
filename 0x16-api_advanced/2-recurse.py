@@ -2,26 +2,28 @@
 """
     Uses Reddit API to get all hot posts
 """
-import requests
 
 
-def recurse(subreddit, hot_list=[], after=""):
-    """Get all hot posts"""
-    if after is None:
-        return []
+def recurse(subreddit, hot_list=[]):
+    """
+    Recursive function to query the Reddit API and retrieve hot article titles.
+    """
+    import requests
 
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
-    url += f"?limit=100&after={after}"
-    headers = {'user-agent': 'request'}
+    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
+    headers = {"User-Agent": "Mozilla/5.0"}
+
     response = requests.get(url, headers=headers, allow_redirects=False)
 
-    if response.status_code != 200:
+    if response.status_code == 200:
+        data = response.json()
+        children = data.get("data", {}).get("children", [])
+        for child in children:
+            title = child.get("data", {}).get("title")
+            hot_list.append(title)
+        after = data.get("data", {}).get("after")
+        if after:
+            recurse(subreddit, hot_list, after)
+        return hot_list
+    else:
         return None
-
-    r_json = response.json()
-    hot_posts_json = r_json.get("data").get("children")
-
-    for post in hot_posts_json:
-        hot_list.append(post.get("data").get("title"))
-
-    return hot_list + recurse(subreddit, [], r_json.get("data").get("after"))
