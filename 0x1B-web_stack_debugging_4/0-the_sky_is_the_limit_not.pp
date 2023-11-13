@@ -1,29 +1,13 @@
-# Puppet manifest to fix failed requests issue in Nginx
+# increase amount of traffic an Nginx server can handle.
 
-# Install Nginx package
-package { 'nginx':
-  ensure => 'installed',
-}
+# increase ULIMIT of the default file
+exec { 'fix--for-nginx':
+  command => 'sed -i "s/15/4096/" /etc/default/nginx',
+  path    => '/usr/local/bin/:/bin/'
+} ->
 
-# Configure Nginx
-file { '/etc/nginx/sites-available/default':
-  ensure  => 'file',
-  content => template('nginx/default.erb'),
-  require => Package['nginx'],
-  notify  => Service['nginx'],
-}
-
-# Enable Nginx default site
-file { '/etc/nginx/sites-enabled/default':
-  ensure  => 'link',
-  target  => '/etc/nginx/sites-available/default',
-  require => File['/etc/nginx/sites-available/default'],
-  notify  => Service['nginx'],
-}
-
-# Restart Nginx service
-service { 'nginx':
-  ensure    => 'running',
-  enable    => true,
-  subscribe => File['/etc/nginx/sites-available/default'],
+# restart Nginx
+exec { 'nginx-restart':
+  command => 'nginx restart',
+  path    => '/etc/init.d/'
 }
