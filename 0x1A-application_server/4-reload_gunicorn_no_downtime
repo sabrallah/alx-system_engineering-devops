@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-# Gracly reloads Gunicorn.
-
-ps aux | pgrep gunicorn | awk '{ print $2 }' | xargs kill -HUP
+# This script gracefully restarts gunicorn app
+PID=$(pgrep gunicorn | head -n 1)
+kill -HUP "$PID"

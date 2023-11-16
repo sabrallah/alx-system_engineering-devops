@@ -20,7 +20,8 @@ server {
 
     # Serve API on AirBnB_clone_v3
     location /api/ {
-        proxy_pass http://127.0.0.1:5002/;
+        proxy_pass http://localhost:5002/api/;
+        proxy_redirect off;
     }
 
     # Configure /2-hbnb route of AirBnB_clone_v4 as root location
@@ -30,7 +31,7 @@ server {
 
     # Serve static content for AirBnB_clone_v4
     location /static {
-        alias web_dynamic/static/;
+        alias /home/ubuntu/AirBnB_clone_v4/web_dynamic/static/;
     }
 
     error_page 404 /404.html;
