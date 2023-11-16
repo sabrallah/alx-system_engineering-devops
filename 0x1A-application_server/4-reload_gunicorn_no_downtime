@@ -1,13 +1,4 @@
 #!/usr/bin/env bash
+# Gracly reloads Gunicorn.
 
-# Get the PID of the gunicorn master process
-MASTER_PID=$(pgrep -f gunicorn | head -1)
-
-# Signal the master to gracefully restart workers 
-kill -s USR2 "$MASTER_PID"
-
-# Wait for new worker processes to spin up
-sleep 1 
-
-# Kill old worker processes gracefully
-kill -s WINCH "$MASTER_PID"
+ps aux | pgrep gunicorn | awk '{ print $2 }' | xargs kill -HUP
